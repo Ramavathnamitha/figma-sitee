@@ -1,0 +1,268 @@
+<!doctype html>
+<!--
+  Figma → Website (single-file starter)
+  - Pixel-aware responsive layout: Desktop / Tablet / Mobile breakpoints
+  - Accessible: semantic headings, nav landmarks, alt text for images
+  - Scalable: CSS variables, utility classes, and component sections
+  - Notes: Replace placeholder images and exact font files from Figma export.
+
+  How to use:
+  1. Duplicate this file as `index.html` in your project folder.
+  2. Extract images from the Figma file, place them into /assets and update <img> src paths.
+  3. Optionally split CSS into styles.css and script.js for production.
+  4. For Webflow: recreate sections using Grid/Flex, paste classes into Custom Code if needed.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Figma → Website — Pixel-Perfect Starter</title>
+  <meta name="description" content="Pixel-aware conversion of the provided Figma design into HTML/CSS/JS" />
+  <!-- Google Fonts (replace with the fonts used in Figma) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#ffffff;
+      --muted:#6b7280;
+      --brand:#0b74de; /* Replace with Figma's primary */
+      --brand-600:#0a61b8;
+      --accent:#f7f9fc;
+      --max-width:1200px;
+      --container-padding:24px;
+      --radius:12px;
+      --shadow: 0 6px 20px rgba(11,116,222,0.08);
+      --ff: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    /* Reset + base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff);
+      background:var(--bg);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      font-size:16px;
+    }
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}
+
+    /* Header */
+    header{padding:28px 0}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-600));display:grid;place-items:center;color:white;font-weight:700}
+    nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
+    nav a{font-weight:600;color:var(--muted)}
+    .cta{background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:var(--shadow)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 460px;gap:48px;align-items:center;padding:48px 0}
+    .eyebrow{font-weight:600;color:var(--brand);margin-bottom:12px}
+    h1{font-size:40px;line-height:1.06;margin:0 0 16px}
+    p.lead{color:var(--muted);margin:0 0 22px}
+    .hero-actions{display:flex;gap:14px;align-items:center}
+    .primary-btn{background:var(--brand);color:#fff;padding:14px 18px;border-radius:12px;font-weight:700}
+    .ghost-btn{border:1px solid #e6eef9;padding:12px 16px;border-radius:12px;color:var(--brand);font-weight:700;background:transparent}
+    .card-hero{background:var(--accent);padding:18px;border-radius:16px;box-shadow:var(--shadow)}
+
+    /* Features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px 0}
+    .feature{background:#fff;border-radius:14px;padding:18px;box-shadow:0 6px 18px rgba(15,23,42,0.04);min-height:120px}
+    .feature h3{margin:0 0 10px;font-size:18px}
+    .feature p{margin:0;color:var(--muted)}
+
+    /* Gallery / Showcase */
+    .showcase{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-bottom:40px}
+    .showcase .media{border-radius:12px;overflow:hidden}
+
+    /* Contact */
+    .contact{background:#0f172a;color:#fff;padding:36px;border-radius:14px}
+    .contact form{display:grid;gap:12px}
+    .input,textarea{padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:inherit}
+
+    /* Footer */
+    footer{padding:36px 0;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr 1fr}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .showcase{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .nav ul{display:none}
+      .hero{grid-template-columns:1fr;gap:20px}
+      h1{font-size:28px}
+      .features{grid-template-columns:1fr}
+      header{padding:18px 0}
+      .logo{width:40px;height:40px}
+    }
+
+    /* Utility */
+    .muted{color:var(--muted)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">FM</div>
+        <div>
+          <div style="font-weight:800">FigmaSite</div>
+          <div class="muted" style="font-size:12px">Pixel perfect</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#showcase">Showcase</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero-cta">
+        <a class="cta" href="#">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" aria-labelledby="hero-heading">
+      <div>
+        <div class="eyebrow">Product • Design • Launch</div>
+        <h1 id="hero-heading">Build a pixel-perfect site from your Figma design</h1>
+        <p class="lead">This starter converts common Figma layout patterns (hero, features, gallery, contact) into an accessible, responsive website with semantic HTML and smooth interactions.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#">Try the Template</a>
+          <a class="ghost-btn" href="#">View on Figma</a>
+        </div>
+        <div style="height:18px"></div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="/assets/avatar-placeholder.png" alt="Placeholder user avatar" style="width:48px;height:48px;border-radius:999px;object-fit:cover">
+          <div>
+            <div style="font-weight:700">Trusted by teams</div>
+            <div class="muted" style="font-size:13px">Design teams at small & enterprise companies</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card-hero" aria-hidden="true">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <img src="/assets/hero-card.png" alt="Mockup showing the product interface" class="media" style="border-radius:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Dashboard snapshot</div>
+              <div class="muted" style="font-size:13px">Quick overview of key metrics</div>
+            </div>
+            <div style="font-weight:700;color:var(--brand)">4.8 ★</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="features" class="container features" aria-labelledby="features-heading">
+      <h2 id="features-heading" class="sr-only">Features</h2>
+
+      <article class="feature" tabindex="0">
+        <h3>Pixel-Perfect</h3>
+        <p>Spacing, type scale and color values follow the Figma spec — replace variables with exact tokens exported from Figma.</p>
+      </article>
+
+      <article class="feature" tabindex="0">
+        <h3>Responsive</h3>
+        <p>Desktop, tablet and mobile breakpoints are included and tested for common layout shifts.</p>
+      </article>
+
+      <article class="feature" tabindex="0">
+        <h3>Accessible</h3>
+        <p>Semantic headings, proper landmarks, and alt text are included for better accessibility and SEO.</p>
+      </article>
+    </section>
+
+    <section id="showcase" class="container showcase" aria-labelledby="showcase-heading">
+      <h2 id="showcase-heading" class="sr-only">Showcase</h2>
+      <div class="media" role="img" aria-label="Mobile mockup">
+        <img src="/assets/mockup-1.png" alt="Mobile mockup of interface">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="media" style="height:180px;background:#eef6ff;border-radius:12px;display:flex;align-items:center;justify-content:center">
+          <img src="/assets/mockup-2.png" alt="Feature highlight screenshot" style="max-height:160px">
+        </div>
+        <div class="media" style="height:120px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(15,23,42,0.04)">
+          <img src="/assets/mockup-3.png" alt="Another screenshot" style="max-height:92px">
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="container" style="padding-bottom:80px">
+      <div style="display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start">
+        <div>
+          <h2 style="margin:0 0 12px">Get started — let's build together</h2>
+          <p class="muted">Send a message and we'll help you convert your Figma file into a production-ready website or a Webflow project.</p>
+        </div>
+
+        <aside class="contact" aria-labelledby="contact-heading">
+          <h3 id="contact-heading">Contact</h3>
+          <form id="contact-form">
+            <label class="sr-only" for="name">Name</label>
+            <input id="name" class="input" placeholder="Your name" required>
+
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" class="input" type="email" placeholder="you@company.com" required>
+
+            <label class="sr-only" for="message">Message</label>
+            <textarea id="message" class="input" placeholder="Brief about your project" rows="4" required></textarea>
+
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button type="submit" class="primary-btn">Send</button>
+            </div>
+          </form>
+          <div id="form-msg" style="margin-top:12px;font-size:14px;opacity:0.95"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-weight:800">FigmaSite</div>
+        <div class="muted" style="font-size:13px">© <span id="year"></span> All rights reserved.</div>
+      </div>
+      <div class="muted">Built with care — ready for handoff to developers or Webflow.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Small interaction: contact form + year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const out = document.getElementById('form-msg');
+      if(!name || !email || !message){
+        out.textContent = 'Please fill all fields.';out.style.color='salmon';return;
+      }
+      out.style.color='lightgreen';out.textContent='Thanks — your message was sent (demo).';
+      // In production: send to API endpoint via fetch() here.
+      this.reset();
+    });
+
+    // Small smooth-scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
+    });
+  </script>
+</body>
+</html>
